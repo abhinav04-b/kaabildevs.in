@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaabil Devs</title><link href="https://fonts.googleapis.com/css2?family=Khand:wght@600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="mobile.css">
+    <style>
+        :root {
+            /* COLOR PALETTE */
+            --bg-dark: #0a0a0a;       /* Deepest Black */
+            --bg-card: #141414;       /* Card Background */
+            --bg-panel: #111111;      /* Section Background */
+            --accent: #ff4d4d;        /* Neon Red */
+            --text-main: #ffffff;     /* White */
+            --text-muted: #a0a0a0;    /* Grey */
+            --border: #333333;        /* Subtle Border */
+        }
+        ::-webkit-scrollbar{
+            display: none;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto; 
+            background-color: var(--bg-dark);
+            font-family: "Rajdhani", sans-serif; /* Default Font */
+        }
+        h1, h2, h3, .nav-link, .hero-btn, .send-btn {
+            font-family: "Khand", sans-serif;
+            text-transform: uppercase;
+        }
+        /* WRAPPER: Holds the pinned content */
+        #main-wrapper {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            overflow: hidden; 
+        }
+
+        /* --- NAVIGATION --- */
+        /* Fixed position ensures it stays on screen, z-index 8 puts it under curtains (9,10) but above content (3-6) */
+        nav {
+            position: fixed; 
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 8; 
+            
+            width: 80%;
+            max-width: calc(100% - 40px);
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            
+            display: flex;
+            justify-content: center;    
+            align-items: center;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px; 
+        }
+
+        nav li a {
+            text-decoration: none;
+            color: black;
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- CURTAINS --- */
+        #m1 {
+            width: 100%;
+            height: 50%; /* Increased overlap to prevent gaps */
+            background-color: black;
+            position: absolute; 
+            top: 0;
+            left: 0;
+            z-index: 10;
+            color: white;
+            font-size: 4em;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #m2 {
+            width: 100%;
+            height: 50%;
+            background-color: black;
+            position: absolute; 
+            bottom: 0;
+            left: 0;
+            z-index: 9;
+            color: white;
+            font-size: 4em;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        /* Text Centering in Curtains */
+        #w1 {
+            position: relative;
+            top: 100%; 
+            transform: translateY(-50%);
+        }
+        #w2 {
+            position: relative;
+            top: 0%; 
+            transform: translateY(-50%);
+        }
+
+        /* --- CONTENT SLIDES --- */
+        #container {
+            width: 100vw;
+            height: 100vh;
+            background-color: violet;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        #hero, #works, #founders, #contact {
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3em;
+            background-color: var(--bg-panel);
+            border: none; /* Removed the thick black border for a cleaner look */
+            color: var(--text-main);
+        }
+
+        #hero     {z-index: 3; }
+        #works    {z-index: 4; }
+        #founders {z-index: 5; }
+        #contact  {z-index: 6; }
+
+        .mainimg{
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            left: 80%;
+            z-index: 0;
+        }
+        .hero-title{
+            position: absolute;
+            top: 45%;
+            left: 22%;
+            transform: translate(-50%, -50%);
+            color: white;
+            z-index: 1;
+            font-size: 2em;
+            width: 40%;
+        }
+        .hero-subtitle{
+            position: absolute;
+            top: 65%;
+            left: 2.5%;
+            color: white;
+            z-index: 1;
+            font-size: 0.5em;
+            font-style: normal;
+            font-weight: 200;
+            width: 40%;
+        }
+        .hero-btn {
+            margin-top: 20px;
+            padding: 12px 30px;
+            border: 2px solid white;
+            color: white;
+            text-decoration: none;
+            font-family: "Khand", sans-serif;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            position: absolute;
+            top: 75%;
+            left: 2.5%;
+        }
+
+        .hero-btn:hover {
+            background-color: white;
+            color: black;
+        }
+        #works {
+            background-color: #f4f4f4; /* Light grey contrast to dark hero */
+            color: #1a1a1a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .works-container {
+            width: 80%;
+            height: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Left Side Typography */
+        .works-header h2 {
+            font-size: 5rem;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        .works-header p {
+            font-size: 1.2rem;
+            color: #555;
+            max-width: 300px;
+        }
+
+        /* Right Side List */
+        .project-list {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            transition: padding 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-item:hover {
+            padding-bottom: 20px; /* Expands on hover */
+        }
+
+        .p-num {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #888;
+        }
+
+        .p-info h3 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .p-info p {
+            font-size: 1rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .p-link {
+            font-size: 2rem;
+            text-decoration: none;
+            color: black;
+        }
+        /* --- FOUNDERS SECTION STYLES --- */
+        #founders {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: visible; /* Changed to visible so pop-outs don't get cut off screen */
+        }
+
+        .founders-wrapper {
+            display: flex;
+            gap: 30px; /* Increased gap */
+            width: 90%;
+            height: 70%;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            top: 15%;
+        }
+
+        /* Base Card Style - INCREASED SIZE HERE */
+        .founder-card {
+            position: relative;
+            width: 290px;  /* Increased from 240px */
+            height: 420px; /* Increased from 320px */
+            background: rgb(38, 38, 38);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: visible; 
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        /* --- THE 3RD "BIG" IMAGE (Character Art) --- */
+        .founder-big-img {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            height: 125%; 
+            width: auto;
+            opacity: 0;
+            pointer-events: none; 
+            
+            /* Z-INDEX LOGIC: 
+            Card Background (0) -> Text (1) -> Big Image (5) -> Social Media (10) 
+            */
+            z-index: 5; 
+            
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
+        }
+
+        /* --- CARD CONTENT LAYOUT --- */
+        .card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 1; /* Content sits below the big image */
+            background: inherit; 
+            border-radius: 15px;
+            /* Removed overflow:hidden so buttons don't get clipped */
+        }
+
+        .imge {
+            height: 100px; /* Slightly taller */
+            background-color: #ff5858;
+            position: relative;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .Usericon {
+            background-color: #414141;
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            position: absolute;
+            bottom: -35px;
+            left: 20px;
+            overflow: hidden;
+            border: 3px solid #262626;
+            z-index: 2;
+        }
+
+        .Usericon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .UserInfo {
+            margin-top: 45px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .UserName {
+            color: white;
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .Id {
+            color: #888;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Description - INCREASED VISIBILITY */
+        .Description {
+            padding: 20px;
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.5;
+            flex-grow: 1; /* Pushes social media to bottom */
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
+
+        /* --- SOCIAL MEDIA (Top Layer) --- */
+        .social-media {
+            margin-top: auto;
+            padding: 15px;
+            border-top: 1px solid #444;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            
+            /* VITAL CHANGES FOR VISIBILITY */
+            position: relative;
+            z-index: 10; /* Higher than .founder-big-img (5) */
+            background: rgba(34, 34, 34, 0.9); /* Semi-transparent background */
+            backdrop-filter: blur(5px); /* Blur effect to separate from image */
+            border-radius: 0 0 15px 15px;
+            transition: transform 0.3s;
+        }
+
+        .social-media a {
+            cursor: pointer; /* Ensure interaction */
+            position: relative;
+            z-index: 11;
+        }
+
+        .social-media a svg {
+            width: 24px;
+            height: 24px;
+            fill: #aaa;
+            transition: fill 0.2s, transform 0.2s;
+        }
+        .social-media a:hover svg { 
+            fill: #ff5858; 
+            transform: scale(1.2);
+        }
+
+
+        /* --- HOVER INTERACTIONS --- */
+
+        /* 1. Container Hovered: Shrink Siblings */
+        .founders-wrapper:hover .founder-card {
+            transform: scale(0.9);
+            filter: blur(2px) grayscale(0.6);
+            opacity: 0.6;
+        }
+
+        /* 2. Specific Card Hovered */
+        .founders-wrapper .founder-card:hover {
+            transform: scale(1.05); /* Slight grow */
+            filter: none;
+            opacity: 1;
+            z-index: 100;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+        }
+
+        /* 3. Reveal Big Image */
+        .founder-card:hover .founder-big-img {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-30px) scale(1);
+        }
+
+        /* 4. Text Fade (Optional) 
+        We hide Description/User info so the image is clean, 
+        BUT Social Media remains visible because of z-index 10 
+        */
+        .founder-card:hover .Description,
+        .founder-card:hover .UserInfo {
+            opacity: 0.1; /* Dim text instead of hiding completely */
+        }
+
+        /* Ensure Social Media stays fully opaque */
+        .founder-card:hover .social-media {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.8); /* Darker bg on hover for contrast */
+        }
+        /* --- CONTACT SECTION --- */
+        #contact {
+            background-color: #111;
+            color: white;
+            font-family: "Khand", sans-serif;
+            position: relative;
+            z-index: 6;
+            overflow: hidden;
+        }
+
+        .contact-container {
+            width: 80%;
+            height: 80%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- LEFT SIDE --- */
+        .contact-left {
+            width: 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-title {
+            font-size: 5rem;
+            line-height: 0.9;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .highlight {
+            color: #ff5858;
+        }
+
+        .contact-sub {
+            font-size: 1.2rem;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        /* Social Grid (2x2) */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: #222;
+            padding: 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+        }
+
+        .social-btn:hover {
+            background: #ff5858;
+            border-color: #ff5858;
+            transform: translateY(-5px);
+            color: black;
+        }
+
+        .s-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .social-btn svg {
+            fill: white;
+            width: 100%;
+            height: 100%;
+            transition: fill 0.3s;
+        }
+
+        .social-btn:hover svg {
+            fill: black;
+        }
+
+
+        /* --- RIGHT SIDE (FORM) --- */
+        .contact-right {
+            width: 50%;
+            background: #1a1a1a;
+            padding: 50px;
+            border-radius: 20px;
+            border: 1px solid #333;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .form-box {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Floating Label Logic */
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 15px 0;
+            font-size: 1.2rem;
+            color: white;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #444;
+            outline: none;
+            font-family: "Khand", sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .input-group textarea {
+            height: 100px;
+            resize: none;
+        }
+
+        .input-group label {
+            position: absolute;
+            top: 15px;
+            left: 0;
+            font-size: 1.2rem;
+            color: #666;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        /* Animation when focused or filled */
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-bottom-color: #ff5858;
+        }
+
+        .input-group input:focus ~ label,
+        .input-group input:not(:placeholder-shown) ~ label,
+        .input-group textarea:focus ~ label,
+        .input-group textarea:not(:placeholder-shown) ~ label {
+            top: -10px;
+            font-size: 0.9rem;
+            color: #ff5858;
+        }
+
+        /* Submit Button */
+        .send-btn {
+            padding: 15px 0;
+            background: #ff5858;
+            color: white;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-family: "Khand", sans-serif;
+        }
+
+        .send-btn:hover {
+            background: white;
+            color: black;
+        }
+
+        .send-btn:hover .arrow {
+            transform: translateX(10px);
+        }
+
+        .arrow {
+            transition: transform 0.3s;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            .contact-container {
+                flex-direction: column;
+                justify-content: center;
+                gap: 50px;
+                height: auto;
+                padding: 50px 0;
+            }
+            .contact-left, .contact-right {
+                width: 100%;
+            }
+            .contact-title {
+                font-size: 3rem;
+            }
+        }
+        .center
+            {
+            position: absolute;
+            margin: auto;
+            top: -20%;
+            right: 0;
+            bottom: 0;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: 25px 10px 0px 0px #EFD19F; 
+        }
+
+        /* FALLING STARS */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="main-wrapper">
+        
+        <nav>
+            <ul>
+                <li><a href="#" class="nav-link" data-index="0">Hero</a></li>
+                <li><a href="#" class="nav-link" data-index="1">Works</a></li>
+                <li><a href="#" class="nav-link" data-index="2">Founders</a></li>
+                <li><a href="#" class="nav-link" data-index="3">Contact</a></li>
+            </ul>
+        </nav>
+
+        <div id="m1">
+            <div class="center"></div>
+            <h1 id="w1">काबिल Devs</h1>
+        </div>
+        
+        <div id="container">
+            <div id="hero">
+                <div class="hero-content">
+                <img class="mainimg" src="KAABIL DEVS.svg" alt="Kaabil Devs Logo">
+                
+                <h1 class="hero-title">ENGINEERING CAPABILITY</h1>
+                <p class="hero-subtitle">We build robust websites and applications that drive results.</p>
+                
+                <a href="/borche.html" class="hero-btn">LET'S BUILD</a>
+            </div>
+            </div>
+            <div id="works">
+                <div class="works-container">
+                    <div class="works-header">
+                        <h2>SELECTED<br>WORKS</h2>
+                        <p>We build things that look good and work better.</p>
+                    </div>
+
+                    <div class="project-list">
+                        <div class="project-item">
+                            <span class="p-num">01</span>
+                            <div class="p-info">
+                                <h3>E-Commerce Rebrand</h3>
+                                <p>Shopify / Liquid / GSAP</p>
+                            </div>
+                            <a href="#" class="p-link">↗</a>
+                        </div>
+
+                        <div class="project-item">
+                            <span class="p-num">02</span>
+                            <div class="p-info">
+                                <h3>FinTech Dashboard</h3>
+                                <p>React / Node.js</p>
+                            </div>
+                            <a href="#" class="p-link">↗</a>
+                        </div>
+
+                        <div class="project-item">
+                            <span class="p-num">03</span>
+                            <div class="p-info">
+                                <h3>Portfolio 2024</h3>
+                                <p>Creative Design</p>
+                            </div>
+                            <a href="#" class="p-link">↗</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="founders">
+                <h3 style="position: absolute; top: 10%; color: white;">Well Wishers</h3>
+                <div class="founders-wrapper" id="founders-list">
+                </div>
+            </div>
+            <div id="contact">
+    <div class="contact-container">
+        
+        <div class="contact-left">
+            <h2 class="contact-title">GOT A PROJECT?<br><span class="highlight">LET'S TALK.</span></h2>
+            <p class="contact-sub">Fill out the form or reach us directly.</p>
+            
+            <div class="social-grid">
+                <a href="https://wa.me/+919693197475" target="_blank" class="social-btn whatsapp">
+                    <div class="s-icon">
+                        <svg viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+                    </div>
+                    <span>WhatsApp</span>
+                </a>
+
+                <a href="tel:+919693197475" class="social-btn phone">
+                    <div class="s-icon">
+                        <svg viewBox="0 0 512 512"><path d="M493.4 24.6l-104-24c-11.3-2.6-22.9 3.3-27.5 13.9l-48 112c-4.2 9.8-1.4 21.3 6.9 28l60.6 49.6c-36 76.7-98.9 140.5-177.2 177.2l-49.6-60.6c-6.8-8.3-18.2-11.1-28-6.9l-112 48C3.9 366.5-2 378.1.6 389.4l24 104C27.1 504.2 36.7 512 48 512c256.1 0 464-207.9 464-464 0-11.2-7.7-20.9-18.6-23.4z"/></svg>
+                    </div>
+                    <span>Call Us</span>
+                </a>
+
+                <a href="https://www.instagram.com/kaabildevs" target="_blank" class="social-btn instagram">
+                    <div class="s-icon">
+                        <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                    </div>
+                    <span>Instagram</span>
+                </a>
+
+                <a href="https://www.linkedin.com/company/kaabil-devs/" target="_blank" class="social-btn linkedin">
+                    <div class="s-icon">
+                        <svg viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+                    </div>
+                    <span>LinkedIn</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="contact-right">
+            <form action="https://formspree.io/f/xeeebnpd" method="POST" class="form-box">
+                
+                <div class="input-group">
+                    <input type="text" name="name" required placeholder=" ">
+                    <label>Name</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="email" name="email" required placeholder=" ">
+                    <label>Email</label>
+                </div>
+
+                <div class="input-group">
+                    <textarea name="message" required placeholder=" "></textarea>
+                    <label>Tell us about your idea...</label>
+                </div>
+
+                <button type="submit" class="send-btn">
+                    SEND MESSAGE
+                    <span class="arrow">→</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+        <div id="m2">
+            <h1 id="w2">काबिल Devs</h1>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    
+    <script src="animation.js"></script>
+    <script>
+        // 1. Define the Data (JSON)
+const foundersData = [
+    {
+        username: "Abhinav",
+        id: "Founder | Developer",
+        desc: "Master of code and caffeine. Turning coffee into scalable web solutions since 2022.",
+        iconImg: "spics/abhinav1.png", // Small box image
+        bigImg: "spics/abhinav2.png", // The 3rd Big Animated Image (Transparent PNG works best)
+        socials: {
+            twitter: "https://x.com/abhinav41205",
+            instagram: "https://www.instagram.com/abhinav0691",
+            github: "https://github.com/abhinav04-b?tab=repositories",
+            linkedin: "https://www.linkedin.com/in/abhinav-kumar-bb89872a1/"
+        }
+    },
+    {
+        username: "Adarsh Goswami",
+        id: "Co-Founder | Devops & SEO Expert",
+        desc: "Prefecting the art of automation and search engine optimization.",
+        iconImg: "spics/adarsh.png",
+        bigImg: "spics/adarsh.png", 
+        socials: {
+            twitter: "#",
+            instagram: "https://www.instagram.com/adarshgoswami0718",
+            github: "https://github.com/adarshscnetwork-source",
+            linkedin: "https://www.linkedin.com/in/adarshgoswami07"
+        }
+    },
+    {
+        username: "Rajnish Singh",
+        id: "Co-Founder | Jr. Developer",
+        desc: "Bridging the gap between design and functionality. React wizard and Node.js ninja.",
+        iconImg: "spics/rajnish1.jpeg",
+        bigImg: "spics/rajnish2.png",
+        socials: {
+            twitter: "#",
+            instagram: "https://www.instagram.com/rajnish__rajput___07",
+            facebook: "https://github.com/rajnishsingh07",
+            linkedin: "https://www.linkedin.com/in/rajnish-singh-4377272a1"
+        }
+    },
+    {
+        username: "Muskan Kumari",
+        id: "Lead UI/UX Designer",
+        desc: "Pixel perfectionist and user experience enthusiast. Crafting designs that delight and engage.",
+        iconImg: "spics/muskan1.jpeg",
+        bigImg: "spics/muskan2.png", 
+        socials: {
+            twitter: "#",
+            instagram: "https://www.instagram.com/muskan_upadhyay02",
+            github: "https://github.com/muskan04-b",
+            linkedin: "https://www.linkedin.com/in/muskan-upadhyay-4186a8325"
+        }
+    },
+    {
+        username: "Saket Goswami",
+        id: "Lead Generator",
+        desc: "Expert in lead generation and conversion optimization.",
+        iconImg: "spics/saket1.jpeg",
+        bigImg: "spics/saket2.png", 
+        socials: {
+            twitter: "#",
+            instagram: "https://www.instagram.com/saket.goswami18",
+            github: "#",
+            linkedin: "https://www.linkedin.com/in/saket-goswami-338671398"
+        }
+    }
+];
+
+// 2. The Render Function
+function renderFounders(data) {
+    const container = document.getElementById('founders-list');
+    
+    // Clear container
+    container.innerHTML = '';
+
+    data.forEach(founder => {
+        // Create HTML string
+        const cardHTML = `
+            <div class="founder-card">
+                <img src="${founder.bigImg}" alt="${founder.username}" class="founder-big-img">
+
+                <div class="card-content">
+                    <div class="imge">
+                        <div class="Usericon">
+                            <img src="${founder.iconImg}" alt="Icon">
+                        </div>
+                    </div>
+
+                    <div class="UserInfo">
+                        <div class="UserName">${founder.username}</div>
+                        <div class="Id">${founder.id}</div>
+                    </div>
+
+                    <div class="Description">
+                        ${founder.desc}
+                    </div>
+
+                    <div class="social-media">
+                        <a href="${founder.socials.twitter}" target="_blank" title="Twitter">
+                            <svg viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg>
+                        </a>
+                        <a href="${founder.socials.instagram}" target="_blank" title="Instagram">
+                            <svg viewBox="0 0 448 512"><path d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"/></svg>
+                        </a>
+                        <a href="${founder.socials.github}" target="_blank" title="github">
+                            <img src="/github.svg" alt="GitHub" style="width:25px; height:25px;">
+                        </a>
+                        <a href="${founder.socials.linkedin}" target="_blank" title="LinkedIn">
+                            <svg viewBox="0 0 448 512"><path d="M100.28 448H7.4V148.9h92.88zM53.79 108.1C24.09 108.1 0 83.5 0 53.8a53.79 53.79 0 0 1 107.58 0c0 29.7-24.1 54.3-53.79 54.3zM447.9 448h-92.68V302.4c0-34.7-.7-79.2-48.29-79.2-48.29 0-55.69 37.7-55.69 76.7V448h-92.78V148.9h89.08v40.8h1.3c12.4-23.5 42.69-48.3 87.88-48.3 94 0 111.28 61.9 111.28 142.3V448z"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        container.insertAdjacentHTML('beforeend', cardHTML);
+    });
+}
+
+// 3. Initialize
+renderFounders(foundersData);
+
+// CREATE STARFIELD ON CURTAINS
+function createStarfield() {
+    const m1 = document.getElementById('m1');
+    const m2 = document.getElementById('m2');
+    
+    // Create stars for m1
+    for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * window.innerWidth + 'px';
+        star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+        star.style.width = (Math.random() * 2 + 1) + 'px';
+        star.style.height = star.style.width;
+        m1.appendChild(star);
+    }
+    
+    // Create stars for m2
+    for (let i = 0; i < 80; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * window.innerWidth + 'px';
+        star.style.top = Math.random() * (window.innerHeight / 2) + 'px';
+        star.style.width = (Math.random() * 2 + 1) + 'px';
+        star.style.height = star.style.width;
+        m2.appendChild(star);
+    }
+}
+
+// Create starfield on page load
+createStarfield();
+    </script>
+</body>
+</html>

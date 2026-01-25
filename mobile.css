@@ -1,0 +1,176 @@
+/* mobile.css - The "Nuclear" Version */
+
+@media screen and (max-width: 720px) {
+
+    /* 1. FORCE SCROLLING ON BODY & WRAPPER */
+    html, body {
+        overflow-x: hidden !important;
+        overflow-y: auto !important; /* Force scrollbar */
+        height: auto !important;
+        min-height: 100% !important;
+        position: static !important;
+    }
+
+    #main-wrapper {
+        height: auto !important;
+        width: 100% !important;
+        overflow: visible !important; /* Allow content to spill out */
+        position: static !important;  /* removing fixed/absolute locks */
+        transform: none !important;   /* Remove any GSAP pins */
+    }
+
+    /* 2. KILL THE CURTAINS */
+    #m1, #m2, #w1, #w2 {
+        display: none !important; /* Hide them completely */
+    }
+
+    /* 3. RESET SECTIONS TO NATURAL STACKING */
+    #hero, #works, #founders, #contact {
+        position: relative !important; /* Stack naturally */
+        top: auto !important;
+        left: auto !important;
+        transform: none !important; /* Reset GSAP movements */
+        opacity: 1 !important;      /* Force visible */
+        visibility: visible !important;
+        height: auto !important;
+        min-height: 100vh;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column;
+        padding: 60px 20px;
+        overflow: hidden !important;
+        border: none !important;
+    }
+
+    /* 4. FIX NAVIGATION */
+    nav {
+        position: fixed !important;
+        top: 1% !important;
+        left: 10% !important;
+        width: 80% !important;
+        transform: none !important;
+        border-radius: 12px !important;
+        z-index: 999 !important;
+        max-width: 100% !important;
+        padding: 20px!important;
+    }
+    nav ul {
+        gap: 15px;
+        padding: 0 10px;
+        overflow-x: auto; /* Scrollable nav if small screen */
+        white-space: nowrap;
+    }
+
+    nav li a {
+        font-size: 0.9rem !important;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    #hero .hero-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative !important;
+    }
+    .mainimg {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        width: 60%; /* Make logo smaller */
+        margin-bottom: 20px;
+        opacity: 0.2; /* Fade it out slightly so text pops */
+    }
+    /* 5. CONTENT ADJUSTMENTS */
+    .hero-title {
+        font-size: 2.5rem !important;
+        width: 100% !important;
+        text-align: center;
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        margin: 20px 0 !important;
+    }
+    .hero-subtitle {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        width: 90%;
+        font-size: 1.1rem;
+        text-align: center;
+        color: #ccc;
+        margin: 20px auto !important;
+    }
+    .hero-btn {
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        margin-top: 40px !important;
+    }
+    .works-container {
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 40px;
+        height: auto;
+    }
+
+    .works-header {
+        text-align: center;
+    }
+
+    .works-header h2 {
+        font-size: 3.5rem;
+    }
+
+    .project-list {
+        width: 100%;
+    }
+
+    .project-item {
+        padding: 15px 0;
+    }
+    
+    .p-info h3 {
+        font-size: 1.5rem;
+    }
+    .founders-wrapper {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: scroll !important; /* Horizontal scroll for founders */
+        width: 100% !important;
+        justify-content: flex-start !important;
+        gap: 20px;
+        padding-bottom: 20px;
+        position: relative !important;
+        top: 0 !important;
+    }
+
+    .founder-card {
+        min-width: 280px !important;
+        margin-right: 15px;
+        transform: none !important;
+        opacity: 1 !important;
+        filter: none !important;
+    }
+
+    /* Fix Big Image visibility on mobile */
+    .founder-big-img {
+        opacity: 0.2 !important; 
+        transform: translateX(-50%) scale(0.9) !important;
+    }
+    
+    .contact-container {
+        flex-direction: column !important;
+        width: 100% !important;
+        height: auto !important;
+    }
+    
+    .contact-left, .contact-right {
+        width: 100% !important;
+    }
+}
